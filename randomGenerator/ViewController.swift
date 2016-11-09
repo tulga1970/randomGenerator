@@ -10,9 +10,17 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet var lowerBoundField: UITextField!
+    @IBOutlet var upperBoundField: UITextField!
+    @IBOutlet var generateButton: UIButton!
+    @IBOutlet var resultLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        lowerBoundField.text = "0"
+        upperBoundField.text = "100"
+        resultLabel.text = "Result:  \(generateNumber(with: UInt32(0), and: UInt32(100)))"
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,5 +29,33 @@ class ViewController: UIViewController {
     }
 
 
+    @IBAction func buttonTouched() {
+        self.hideKeyBoard()
+        
+        let lowerBound = UInt32(lowerBoundField.text!)
+        let upperBound = UInt32(upperBoundField.text!)
+        
+        let result = self.generateNumber(with: lowerBound!, and: upperBound!)
+        
+        resultLabel.text = "Result:  \(result)"
+    }
+    
+    func generateNumber(with lowerBound:UInt32, and upperBound:UInt32) -> Int {
+        let result = Int(arc4random_uniform(upperBound - lowerBound) + lowerBound)
+        
+        return result
+    }
+    
+    /**
+     * Called when the user click on the view (outside the UITextField).
+     */
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.hideKeyBoard()
+    }
+    
+    func hideKeyBoard() {
+        self.lowerBoundField.endEditing(true)
+        self.upperBoundField.endEditing(true)
+    }
 }
 

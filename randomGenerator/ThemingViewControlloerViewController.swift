@@ -39,6 +39,41 @@ class ThemingViewControlloerViewController: UIViewController {
         rerender()
     }
     
+    @IBAction func stepButtonPressed(_ sender: UIStepper) {
+        stepLabel.text = String(sender.value)
+    }
+    
+    
+    @IBAction func alertPressed(_ sender: AnyObject) {
+        let alert = UIAlertController(title: "Alert", message: "Message", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Continue", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func actionSheetButtonPressed(_ sender: AnyObject) {
+        let alertController = UIAlertController(title: "Action Sheet", message: "What would you like to do?", preferredStyle: .actionSheet)
+        
+        let sendButton = UIAlertAction(title: "Send now", style: .default, handler: { (action) -> Void in
+            print("Ok button tapped")
+        })
+        
+        let  deleteButton = UIAlertAction(title: "Delete forever", style: .destructive, handler: { (action) -> Void in
+            print("Delete button tapped")
+        })
+        
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
+            print("Cancel button tapped")
+        })
+        
+        
+        alertController.addAction(sendButton)
+        alertController.addAction(deleteButton)
+        alertController.addAction(cancelButton)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
     func rerender() {
         if isBlackMode {
             self.view.backgroundColor = UIColor.black
@@ -51,6 +86,7 @@ class ThemingViewControlloerViewController: UIViewController {
             actionBtn.setTitleColor(UIColor.blue, for: UIControlState.normal)
             themeNameLabel.text = "White Theme"
         }
+        
     }
     /*
     // MARK: - Navigation
